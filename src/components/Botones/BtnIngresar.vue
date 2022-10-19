@@ -1,0 +1,17 @@
+<template>
+    <v-btn
+        depressed
+        large
+        color="#00bcd4"
+        dark
+    >
+        <v-icon
+            medium
+            class="mx-2"
+            color="#ffffff"
+        >
+            mdi-checkbox-marked-circle-outline
+        </v-icon>
+        Ingresar
+    </v-btn>
+</template>
