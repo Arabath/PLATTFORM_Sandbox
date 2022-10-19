@@ -8,7 +8,7 @@
 
               <v-autocomplete
                 :loading="loadingLCT"
-                label="Codigos de Convivencia"
+                label="Nivel"
                 :items="aIncumplimientos"
                 v-model="incumplimientoID"
                 item-text="convivencia"
@@ -17,30 +17,37 @@
                 clearable
                 solo
                 persistent-hint
-                hint="Seleccione un Codigo de Convivencia"
+                hint="Nivel"
               />
 
-            <v-radio-group
-              v-model="radio_tipo"
-              row
-              @change="ListaConvivencia()"
-            >
-          
-            <v-radio
-               v-for="(radioOpc, index) in convivenciaTipo" v-bind:key="index"
-              :label="radioOpc.descripcion"
-              :value="radioOpc.id"
-            ></v-radio>  
-            
-          </v-radio-group>
-        
-        <v-combobox>
-          <v-data-table :headers="caberaLibrosTemas" :items="librosTemas" :search="search" :page.sync="page"
-              :items-per-page="itemsPerPage" hide-default-footer @page-count="pageCount = $event" class="elevation-1"
-              v-if="!loadingData">
+              <v-autocomplete
+                :loading="loadingLCT"
+                label="Cursos"
+                :items="aIncumplimientos"
+                v-model="incumplimientoID"
+                item-text="Seleccione un Curso"
+                item-value="id"
+                autocomplete="off"
+                clearable
+                solo
+                persistent-hint
+                hint="Seleccione un Curso"
+              />
 
-          </v-data-table>
-        </v-combobox>
+
+              <v-autocomplete
+                :loading="loadingLCT"
+                label="Tipo de Convivencia"
+                :items="aIncumplimientos"
+                v-model="incumplimientoID"
+                item-text="Seleccione un Tipo de Convivencia"
+                item-value="id"
+                autocomplete="off"
+                clearable
+                solo
+                persistent-hint
+                hint="Seleccione un Tipo de Convivencia"
+              />
 
     </v-flex>
   </v-layout>
