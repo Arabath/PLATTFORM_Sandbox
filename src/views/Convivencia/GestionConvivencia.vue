@@ -56,7 +56,7 @@
 
               <v-container>
                 <v-card>
-                  <v-data-table >
+                  <v-data-table :headers="cabeceraConvivencia">
 
                   </v-data-table>
                 </v-card>
@@ -79,6 +79,13 @@ export default {
       pageCount: 0,
       itemsPerPage: 10,
       search: "",
+      cabeceraConvivencia: [
+        {text:"ALUMNO", value:''},
+        {text:"TIPO", value:''},
+        {text:"CONVIVENCIA", value:''},
+        {text:"FECHA", value:''},
+        {text:"SOLICITANTE", value:''}
+      ],
       alertDlg: false,
       loadingData: false,
       random_LT: "",
