@@ -66,36 +66,41 @@
     </v-content>
 
     <!-- Menú navegación lateral izquierdo -->
+
     <v-navigation-drawer
-      v-model="drawer"
-      :clipped="$vuetify.breakpoint.lgAndUp"
-      app
-      color="#f1f1f5"
-      v-if="this.$store.state.usuario != null"
-      permanent
-      expand-on-hover
+    v-model="drawer"
+    :clipped="$vuetify.breakpoint.lgAndUp"
+    app
+    color="#f1f1f5"
+    v-if="this.$store.state.usuario != null"
+    permanent
+    expand-on-hover
     >
-      <v-layout fill-height column justify-space-between>
-        <v-list dense>
-          <v-list-item class="menu_principal_group" :to="{ name: 'personas' }">
-            <v-btn
-              fab
-              small
-              depressed
-              dark
-              color="#d0d0d0"
-              style="margin-right: 10px; margin-left: 5px"
-            >
-              <v-icon>mdi-account-multiple</v-icon>
-            </v-btn>
-            <v-list-item-content>
-              <v-list-item-title class="menu_principal"
-                >PERSONAS</v-list-item-title
-              >
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-        <v-list-group>
+    <v-layout fill-height column justify-space-between>
+      
+      <v-list dense>
+        <v-list-item class="menu_principal_group" :to="{ name: 'personas' }">
+          <v-btn
+          fab
+          small
+          depressed
+          dark
+          color="#d0d0d0"
+          style="margin-right: 10px; margin-left: 5px"
+          >
+          <v-icon>mdi-account-multiple</v-icon>
+        </v-btn>
+        
+        <v-list-item-content>
+          <v-list-item-title class="menu_principal">
+            PERSONAS
+          </v-list-item-title>
+        </v-list-item-content>
+        
+      </v-list-item>
+    </v-list>
+
+    <v-list-group>
           <v-list-item slot="activator" class="menu_principal_group">
             <v-btn
               fab
@@ -107,41 +112,29 @@
             >
               <v-icon>mdi-fingerprint</v-icon>
             </v-btn>
+
             <v-list-item-title> Gestion de Datos </v-list-item-title>
           </v-list-item>
+
           <v-list-item :to="{ name: 'gestionLibrosTemas' }">
             <v-list-item-action></v-list-item-action>
             <v-list-item-content>
               <v-list-item-title class="menu_principal"
-                >Biblioteca Libros Temas</v-list-item-title
-              >
-            </v-list-item-content>
+                >Biblioteca Libros Temas
+              </v-list-item-title>
+              </v-list-item-content>
           </v-list-item>
-        </v-list-group>
-
-         <v-list-group>
-          <v-list-item slot="activator" class="menu_principal_group">
-            <v-btn
-              fab
-              depressed
-              small
-              dark
-              color="#d0d0d0"
-              style="margin-right: 10px; margin-left: 5px"
-            >
-              <v-icon>mdi-fingerprint</v-icon>
-            </v-btn>
-            <v-list-item-title> Gestion de Datos </v-list-item-title>
-          </v-list-item>
+          
           <v-list-item :to="{ name: 'gestionConvivencia' }">
             <v-list-item-action></v-list-item-action>
             <v-list-item-content>
               <v-list-item-title class="menu_principal"
-                >Biblioteca Libros Temas</v-list-item-title
-              >
+                >Convivencia
+            </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </v-list-group>
+
+    </v-list-group>
 
       </v-layout>
     </v-navigation-drawer>

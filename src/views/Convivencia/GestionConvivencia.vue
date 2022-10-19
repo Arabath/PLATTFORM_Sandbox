@@ -1,56 +1,70 @@
 <template>
   <v-layout>
-    <v-flex>
+    <v-flex >
 
         <v-overlay :value="loadingData">
             <v-progress-circular indeterminate size="64"></v-progress-circular>          
         </v-overlay>
 
-              <v-autocomplete
-                :loading="loadingLCT"
-                label="Nivel"
-                :items="aIncumplimientos"
-                v-model="incumplimientoID"
-                item-text="convivencia"
-                item-value="id"
-                autocomplete="off"
-                clearable
-                solo
-                persistent-hint
-                hint="Nivel"
-              />
+              <v-row>
+                <v-col cols="3">  
+                  <v-autocomplete
+                    :loading="loadingLCT"
+                    label="Nivel"
+                    :items="aIncumplimientos"
+                    v-model="incumplimientoID"
+                    item-text="convivencia"
+                    item-value="id"
+                    autocomplete="off"
+                    clearable
+                    solo
+                    persistent-hint
+                    hint="Nivel"
+                  />
+                </v-col>
+                <v-col cols="4">
+                  <v-autocomplete
+                    :loading="loadingLCT"
+                    label="Cursos"
+                    :items="aIncumplimientos"
+                    v-model="incumplimientoID"
+                    item-text="Seleccione un Curso"
+                    item-value="id"
+                    autocomplete="off"
+                    clearable
+                    solo
+                    persistent-hint
+                    hint="Seleccione un Curso"
+                  />
+                </v-col>
+                <v-col cols="5">
+                  <v-autocomplete
+                    :loading="loadingLCT"
+                    label="Tipo de Convivencia"
+                    :items="aIncumplimientos"
+                    v-model="incumplimientoID"
+                    item-text="Seleccione un Tipo de Convivencia"
+                    item-value="id"
+                    autocomplete="off"
+                    clearable
+                    solo
+                    persistent-hint
+                    hint="Seleccione un Tipo de Convivencia"
+                  />
+                </v-col>
+              </v-row>
 
-              <v-autocomplete
-                :loading="loadingLCT"
-                label="Cursos"
-                :items="aIncumplimientos"
-                v-model="incumplimientoID"
-                item-text="Seleccione un Curso"
-                item-value="id"
-                autocomplete="off"
-                clearable
-                solo
-                persistent-hint
-                hint="Seleccione un Curso"
-              />
+              <v-container>
+                <v-card>
+                  <v-data-table >
 
-
-              <v-autocomplete
-                :loading="loadingLCT"
-                label="Tipo de Convivencia"
-                :items="aIncumplimientos"
-                v-model="incumplimientoID"
-                item-text="Seleccione un Tipo de Convivencia"
-                item-value="id"
-                autocomplete="off"
-                clearable
-                solo
-                persistent-hint
-                hint="Seleccione un Tipo de Convivencia"
-              />
+                  </v-data-table>
+                </v-card>
+              </v-container>
 
     </v-flex>
   </v-layout>
+
 </template>
 
 <script>

@@ -1,5 +1,6 @@
 <template>
   <v-layout align-start>
+    
     <v-flex>
       <!-- Spinner carga -->
       <v-overlay :value="loadingData">
@@ -10,12 +11,13 @@
         <v-col>
           <v-card class="px-3 py-1">
             
+            <!-- comienzo data-table {#ff5733} -->
             <v-data-table :headers="caberaLibrosTemas" :items="librosTemas" :search="search" :page.sync="page"
               :items-per-page="itemsPerPage" hide-default-footer @page-count="pageCount = $event" class="elevation-1"
               v-if="!loadingData">
-
+              
+              <!-- botones editar y eliminar tema {#e173ff} -->
               <template v-slot:[`item.Acciones`]="{ item }">
-
                 <v-tooltip bottom slot="activator">
                   <template #activator="{ on: onTooltip }">
                     <v-btn color="#999999" v-on="onTooltip" fab x-small dark @click="showTCRUD(item,'Editar')">
@@ -24,9 +26,7 @@
                   </template>
                   <span class="tooltip_small">Editar Tema</span>
                 </v-tooltip>
-                
                 &nbsp;&nbsp;
-
                 <v-tooltip bottom slot="activator">
                   <template #activator="{ on: onTooltip }">
                     <v-btn color="#ff8888" v-on="onTooltip" fab x-small dark @click="showDeleteConfirm(item.id)">
@@ -35,20 +35,18 @@
                   </template>
                   <span class="tooltip_small">Eliminar Tema</span>
                 </v-tooltip>
-
               </template>
 
+              <!-- busqueda y nuevo tema {#33ffc1} -->
               <template v-slot:top>
                 <v-toolbar flat color="white">
-
                   <v-toolbar-title>Libros Temas</v-toolbar-title>
                   <v-divider class="mx-4" inset vertical></v-divider>
                   <v-spacer></v-spacer>
                   <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line hide-details
-                    filled rounded dense></v-text-field>
-                 
+                    filled rounded dense>
+                  </v-text-field>
                   <v-spacer></v-spacer>
-                  
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn class="mx-2" v-on="on" fab dark small color="cyan" @click="showTCRUD(null,'Crear')"
@@ -58,10 +56,10 @@
                     </template>
                     <span class="tooltip">Nuevo Tema</span>
                   </v-tooltip>
-
                 </v-toolbar>
               </template>
 
+              <!-- fin data-table {#ff5733} -->
             </v-data-table>
 
             <div class="text-center pt-2">
@@ -73,15 +71,15 @@
       </v-row>
     </v-flex>
 
+    <!-- ventana dialogo "nuevo tema" {#bad1f3} -->
     <v-dialog v-model="dialogLTCRUD" persistent max-width="800px">
-
       <v-form @submit.prevent="enviaDatos()" ref="form" lazy-validation>
         <LibrosTemasFormCRUD :random_LT="random_LT" :libroTema="libroTema" :accion="accion" @closeLTCRUD="closeLTCRUD"
           @showAlert="showAlert" />
-
       </v-form>
     </v-dialog>
 
+    <!-- ventana dialogo para confirmar eliminar tema {#dff3ba} -->
     <v-dialog v-model="dlgDeleteConfirm" persistent max-width="600">
       <v-card class="pt-5" style="border:5px solid #ff8888">
         <v-card-text>
@@ -99,6 +97,7 @@
     <template v-if="alertDlg">
       <Alerts :alertColor="alertColor" :alertMessage="alertMessage" :snackbar="snackbar" />
     </template>
+
   </v-layout>
 </template>
 
