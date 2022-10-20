@@ -7,54 +7,91 @@
         </v-overlay>
 
               <v-row>
-                <v-col cols="3">  
-                  <v-autocomplete
-            
-                    label="Nivel"
-               
-                    item-text="convivencia"
-                    item-value="id"
-                    autocomplete="off"
-                    clearable
-                    solo
-                    persistent-hint
-                    hint="Nivel"
-                  />
-                </v-col>
-                <v-col cols="4">
-                  <v-autocomplete
-          
-                    label="Cursos"
-               
-                    item-text="Seleccione un Curso"
-                    item-value="id"
-                    autocomplete="off"
-                    clearable
-                    solo
-                    persistent-hint
-                    hint="Seleccione un Curso"
-                  />
-                </v-col>
                 <v-col cols="5">
                   <v-autocomplete
                     :loading="loadingLCT"
                     label="Tipo de Convivencia"
                     :items="aIncumplimientos"
                     v-model="incumplimientoID"
-                    item-text="Seleccione un Tipo de Convivencia"
+                    item-text="descripcion"
                     item-value="id"
                     autocomplete="off"
                     clearable
                     solo
                     persistent-hint
                     hint="Seleccione un Tipo de Convivencia"
+                    @change="ListaConvivencia()"
                   />
                 </v-col>
+                <v-col cols="4">
+                </v-col>
+
+                <v-col cols="3" style="text-align:right">
+
+                    <v-tooltip left slot="activator">
+                      <template #activator="{ on: onTooltip }">
+                        <v-btn
+                          class="mx-2 hidden-sm-and-down"
+                          v-on="onTooltip"
+                          fab
+                          dark
+                          medium
+                          color="#38c6d9"
+                          @click="showDlgNuevoIngreso()"
+                          style="margin-bottom: 18px"
+                        >
+                          <v-icon dark medium>mdi-pencil</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Nuevo Registo Disciplinario</span>
+                    </v-tooltip>
+
+                </v-col>
+
+
               </v-row>
 
               <v-container>
                 <v-card>
-                  <v-data-table :headers="cabeceraConvivencia">
+                  <v-data-table
+                    :headers="convivenciaHeader"
+                    :items="convivenciaValues"
+                    :disable-pagination="false"
+                    class="elevation-1"
+                    hide-default-footer
+                  >
+                      <!----------- SOLICITANTE ------------>
+                      <template v-slot:[`item.convivencia`]="props"> 
+                        <span style="color:#336699">
+                          {{props.item.convivencia}}
+                        </span>
+                      </template>
+
+
+                      <!----------- OBSERVACIONES ------------>
+                      <template v-slot:[`item.Acciones`]="{ item }" >
+
+                        <v-tooltip bottom slot="activator">
+                          <template
+                            #activator="{ on: onTooltip }"
+                          >
+                          <v-btn
+                              v-show="item.observaciones"
+                              color="green"
+                              v-on="onTooltip"
+                              fab
+                              x-small
+                              dark
+                              @click="showObservaciones(item.observaciones )"
+                          >
+                            <v-icon>mdi-file-document</v-icon>
+                          </v-btn>
+                          </template>
+                          <span>
+                            Observaciones
+                          </span>
+                        </v-tooltip>
+                      </template>
 
                   </v-data-table>
                 </v-card>
@@ -77,13 +114,11 @@ export default {
       pageCount: 0,
       itemsPerPage: 10,
       search: "",
-      cabeceraConvivencia: [
-        {text:"ALUMNO", value:''},
-        {text:"TIPO", value:''},
-        {text:"CONVIVENCIA", value:''},
-        {text:"FECHA", value:''},
-        {text:"SOLICITANTE", value:''}
+      convivenciaHeader: [
+        {text:"CONVIVENCIA", value:'convivencia'},
+        {text:"", value:'Acciones'},
       ],
+      convivenciaValues: [],
       alertDlg: false,
       loadingData: false,
       random_LT: "",
@@ -129,9 +164,10 @@ export default {
       let me = this;
       me.loadingData = true
       try {
-        const data = await axios.get(`api/Convivencia/${me.institucion},${me.radio_tipo}/ListaConvivencia`, configuracion, { timeout: 30000 });
+        const data = await axios.get(`api/Convivencia/${me.institucion},${me.incumplimientoID}/ListaConvivencia`, configuracion, { timeout: 30000 });
         console.log(data.data);
-        me.aIncumplimientos = data.data;
+        me.convivenciaValues = data.data;
+        me.loadingData = false
       } catch (error) {
           this.$emit(
             "showAlert",
@@ -145,19 +181,21 @@ export default {
     },
 
     async ListaConvivenciaTipos() {
+      console.log(this.institucion)
       let header = { Authorization: "Bearer " + this.$store.state.token }
       let configuracion = { headers: header }
       let me = this
-      me.loadingData = true
+      me.loadingLCT = true
       try {
         const data = await axios.get(`api/Convivencia/${me.institucion}/ListaConvivenciaTipos`, configuracion, { timeout: 30000 });
         console.log(data.data)
-        me.convivenciaTipo = data.data
+        me.aIncumplimientos = data.data
         console.log(this.convivenciaTipo)
+        me.loadingLCT = false
       } catch (error) {
         console.log(error)
       } finally {
-        me.loadingData = false
+        me.loadingLCT = false
       }
     },
 
