@@ -9,10 +9,9 @@
               <v-row>
                 <v-col cols="3">  
                   <v-autocomplete
-                    :loading="loadingLCT"
+            
                     label="Nivel"
-                    :items="aIncumplimientos"
-                    v-model="incumplimientoID"
+               
                     item-text="convivencia"
                     item-value="id"
                     autocomplete="off"
@@ -24,10 +23,9 @@
                 </v-col>
                 <v-col cols="4">
                   <v-autocomplete
-                    :loading="loadingLCT"
+          
                     label="Cursos"
-                    :items="aIncumplimientos"
-                    v-model="incumplimientoID"
+               
                     item-text="Seleccione un Curso"
                     item-value="id"
                     autocomplete="off"
@@ -93,6 +91,9 @@ export default {
       dialogLTCRUD: false,
       dlgDeleteConfirm: false,
       selID: "",
+      loadingLCT:"",
+      aIncumplimientos:[],
+      incumplimientoID:""
     };
   },
   computed: {
@@ -120,6 +121,29 @@ export default {
   },
 
   methods: {
+
+    async ListaConvivencia() {
+      this.loadingLCT = true;
+      let header = { Authorization: "Bearer " + this.$store.state.token };
+      let configuracion = { headers: header };
+      let me = this;
+      me.loadingData = true
+      try {
+        const data = await axios.get(`api/Convivencia/${me.institucion},${me.radio_tipo}/ListaConvivencia`, configuracion, { timeout: 30000 });
+        console.log(data.data);
+        me.aIncumplimientos = data.data;
+      } catch (error) {
+          this.$emit(
+            "showAlert",
+            "black",
+            "Problemas de conexion con el servidor!"
+          );
+        console.log(error);
+      } finally {
+        me.loadingLCT = false
+      }
+    },
+
     async ListaConvivenciaTipos() {
       let header = { Authorization: "Bearer " + this.$store.state.token }
       let configuracion = { headers: header }
@@ -128,6 +152,8 @@ export default {
       try {
         const data = await axios.get(`api/Convivencia/${me.institucion}/ListaConvivenciaTipos`, configuracion, { timeout: 30000 });
         console.log(data.data)
+        me.convivenciaTipo = data.data
+        console.log(this.convivenciaTipo)
       } catch (error) {
         console.log(error)
       } finally {
