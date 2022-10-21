@@ -1,7 +1,9 @@
+<!-- ventana dialogo para crear persona -->
 <template>
   <v-container>
     <v-row>
-      <v-card class="mx-auto">
+      <v-card class="mx-auto"> 
+        <!-- cabecera de titulo y boton cierre {#bae9f3} -->
         <v-toolbar color="#64bdff" dark>
           <v-row>
             <v-col style="padding-top: 20px; padding-left: 20px">
@@ -11,12 +13,13 @@
               >
             </v-col>
             <v-col align="right" style="padding-top: 15px">
+              <!-- boton cierre ventana dialogo "crear persona" -->
               <v-btn
                 :to="{ name: 'personas' }"
                 fab
                 small
                 dark
-                color="transparent"
+                color="cyan"
                 depressed
                 @click="limpiaDatos()"
               >
@@ -25,6 +28,8 @@
             </v-col>
           </v-row>
         </v-toolbar>
+        
+        <!-- Formulario para crear personas importado desde componente "controlesFormCRU" {#dff3ba} -->
         <v-card-text>
           <v-card flat>
             <v-card-text>
@@ -34,6 +39,7 @@
             </v-card-text>
           </v-card>
         </v-card-text>
+
       </v-card>
     </v-row>
   </v-container>

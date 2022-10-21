@@ -1,9 +1,11 @@
+<!-- ESTE TEMPLATE CORRESPONDE A EL DATATABLE PRINCIPAL SECCION PERSONAS -->
 <template>
   <v-layout align-start>
     <v-flex>
       <v-row>
         <v-col>
           <v-card class="px-3 py-1">
+            <!-- config seteo para header {#df00f5} -->
             <v-data-table
               :headers="cabecerapersonas"
               :items="personas"
@@ -15,9 +17,12 @@
               class="elevation-1"
               v-if="!carga"
             >
+            
               <template v-slot:[`item.nombreCompleto`]="{ item }">
                 {{ item.apellido + " " + item.nombres }}
               </template>
+              
+              <!-- menu opciones {#f50000} -->
               <template v-slot:[`item.opciones`]="{ item }">
                 <v-menu
                   left
@@ -41,7 +46,6 @@
                       <v-icon>mdi-dots-vertical</v-icon>
                     </v-btn>
                   </template>
-
                   <v-list>
                     <v-list-item
                       @click.native.stop
@@ -61,16 +65,16 @@
                         >Editar Datos Personales</v-list-item-title
                       >
                     </v-list-item>
-
                   </v-list>
                 </v-menu>
               </template>
+              
+              <!-- Titulo, busqueda y boton "Nueva Persona" {#3ff500}-->
               <template v-slot:top>
                 <v-toolbar flat color="white">
                   <v-toolbar-title>Personas</v-toolbar-title>
                   <v-divider class="mx-4" inset vertical></v-divider>
                   <v-spacer></v-spacer>
-
                   <v-text-field
                     v-model="search"
                     append-icon="mdi-magnify"
@@ -101,7 +105,10 @@
                   </v-tooltip>
                 </v-toolbar>
               </template>
+
             </v-data-table>
+
+            <!-- Paginacion {#009cf5} -->
             <div class="text-center pt-2">
               <v-pagination
                 v-model="page"
@@ -109,6 +116,7 @@
                 :total-visible="10"
               ></v-pagination>
             </div>
+            
           </v-card>
         </v-col>
       </v-row>

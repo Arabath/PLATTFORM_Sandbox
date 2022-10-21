@@ -1,7 +1,6 @@
 <template>
   <v-layout align-start>
     <v-flex>
-
       
       <v-data-table
         :headers="cabecerapersonas"

@@ -1,3 +1,4 @@
+<!-- Formulario para crear persona, es invocado en AltaPersona.vue -->
 <template>
   <v-row>
     <v-col cols="12">

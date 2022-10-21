@@ -95,6 +95,14 @@ const routes = [
       admin: true
     }
   },
+  {
+    path: '/nuevoRegistroConducta',
+    name: 'nuevoRegistroConducta',
+    component: () => import('../components/Convivencia/NuevoRegistroConducta.vue'),
+    meta: {
+      administrador: true,
+    }
+  },
   
 ]
 

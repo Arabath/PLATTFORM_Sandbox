@@ -31,13 +31,13 @@
                     <v-tooltip left slot="activator">
                       <template #activator="{ on: onTooltip }">
                         <v-btn
+                          :to="{ name: 'nuevoRegistroConducta' }"
                           class="mx-2 hidden-sm-and-down"
                           v-on="onTooltip"
                           fab
                           dark
                           medium
                           color="#38c6d9"
-                          @click="showDlgNuevoIngreso()"
                           style="margin-bottom: 18px"
                         >
                           <v-icon dark medium>mdi-pencil</v-icon>
@@ -165,7 +165,7 @@ export default {
       me.loadingData = true
       try {
         const data = await axios.get(`api/Convivencia/${me.institucion},${me.incumplimientoID}/ListaConvivencia`, configuracion, { timeout: 30000 });
-        console.log(data.data);
+        // console.log(data.data);
         me.convivenciaValues = data.data;
         me.loadingData = false
       } catch (error) {
@@ -181,7 +181,7 @@ export default {
     },
 
     async ListaConvivenciaTipos() {
-      console.log(this.institucion)
+      //console.log(this.institucion)
       let header = { Authorization: "Bearer " + this.$store.state.token }
       let configuracion = { headers: header }
       let me = this
@@ -190,7 +190,6 @@ export default {
         const data = await axios.get(`api/Convivencia/${me.institucion}/ListaConvivenciaTipos`, configuracion, { timeout: 30000 });
         console.log(data.data)
         me.aIncumplimientos = data.data
-        console.log(this.convivenciaTipo)
         me.loadingLCT = false
       } catch (error) {
         console.log(error)
