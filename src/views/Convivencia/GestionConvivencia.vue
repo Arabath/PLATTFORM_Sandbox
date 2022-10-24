@@ -99,10 +99,12 @@
               </v-container>
 
     </v-flex>
-    <!-- convivencia.descripcion -->
+    <!-- convivencia.descripcion /*{#bad1f3}*/-->
     <v-dialog v-model="dialogLTCRUD" persistent max-width="800px">
-      <v-form @submit.prevent="enviaDatos()" ref="form" lazy-validation>
-          <NuevoRegistro />
+      <v-form  ref="form" lazy-validation>
+          <NuevoRegistroConducta :random_LT="random_LT" :convivencia="convivencia" :accion="accion"
+            @closeLTCRUD="closeLTCRUD" 
+          />
       </v-form>
     </v-dialog>
 
@@ -114,12 +116,11 @@
 
 import axios from "axios";
 import Alerts from "@/components/Public/Alerts";
-import NuevoRegistro from "../../components/Convivencia/NuevoRegistroConducta.vue"
-
-//TODO: VER PORQUE NO MATCHEA IMPORTACION CON TAG (105 | 117)
-
+import NuevoRegistroConducta from '../../components/Convivencia/NuevoRegistroConducta.vue';
 
 export default {
+
+
   data() {
     return {
       page: 1,
@@ -177,6 +178,7 @@ export default {
 
   components: {
     Alerts,
+    NuevoRegistroConducta
    
   },
 
@@ -335,8 +337,8 @@ export default {
     /* funcion para mostrar ventana {#ff3399} */
     showTCRUD(item, accion) {
       if (accion != 'Crear') {
-        this.libroTema = item;
-        console.log(this.libroTema)
+        this.convivencia = item;
+        console.log(this.convivencia)
       }
       this.accion = accion;
       console.log(accion)
@@ -358,7 +360,7 @@ export default {
         descripcion:""
       }
     },
-  },
+  
 
   showAlert(tipo, mensaje) {
     this.snackbar = false;
@@ -368,7 +370,7 @@ export default {
     this.alertDlg = true;
     this.closeAlert();
   },
-
+},
 };
 </script>
 
