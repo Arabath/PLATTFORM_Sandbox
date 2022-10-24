@@ -3,7 +3,7 @@
   <v-container>
     <v-row>
       <v-card class="mx-auto"> 
-        <!-- cabecera de titulo y boton cierre {#bae9f3} -->
+        /* cabecera de titulo y boton cierre {#bae9f3} */
         <v-toolbar color="#64bdff" dark>
           <v-row>
             <v-col style="padding-top: 20px; padding-left: 20px">
@@ -29,7 +29,7 @@
           </v-row>
         </v-toolbar>
         
-        <!-- Formulario para crear personas importado desde componente "controlesFormCRU" {#dff3ba} -->
+        /* Formulario para crear personas importado desde componente "controlesFormCRU" {#dff3ba} */
         <v-card-text>
           <v-card flat>
             <v-card-text>

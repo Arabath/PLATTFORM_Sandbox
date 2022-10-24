@@ -37,7 +37,7 @@
                 </v-tooltip>
               </template>
 
-              <!-- busqueda y nuevo tema {#33ffc1} -->
+              <!-- busqueda  -->
               <template v-slot:top>
                 <v-toolbar flat color="white">
                   <v-toolbar-title>Libros Temas</v-toolbar-title>
@@ -47,6 +47,8 @@
                     filled rounded dense>
                   </v-text-field>
                   <v-spacer></v-spacer>
+                  
+                  <!-- Nuevo Tema Btn /*{#ff3399}*/ -->
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn class="mx-2" v-on="on" fab dark small color="cyan" @click="showTCRUD(null,'Crear')"
@@ -71,7 +73,7 @@
       </v-row>
     </v-flex>
 
-    <!-- ventana dialogo "nuevo tema" {#bad1f3} -->
+    <!-- ventana dialogo "nuevo tema" /*{#bad1f3}*/ -->
     <v-dialog v-model="dialogLTCRUD" persistent max-width="800px">
       <v-form @submit.prevent="enviaDatos()" ref="form" lazy-validation>
         <LibrosTemasFormCRUD :random_LT="random_LT" :libroTema="libroTema" :accion="accion" @closeLTCRUD="closeLTCRUD"
@@ -122,13 +124,19 @@ export default {
       librosTemas: [],
       alertDlg: false,
       loadingData: false,
+
+      /* Props Strings {#c6ed97} */
       random_LT: "",
       accion: "",
+      
       dialogLTCRUD: false,
+
+      /* objeto libroTema {#c6ed97} */
       libroTema: {
         id: "",
         tema: "",
       },
+
       dlgDeleteConfirm: false,
       selID: "",
     };
@@ -158,6 +166,7 @@ export default {
   },
 
   methods: {
+
     async enviaDatos() {
       if (this.accion === 'Crear') {
         const paso1 = await this.CrearBibliotecaLibrosTema();
@@ -252,6 +261,8 @@ export default {
       try {
         const response = await axios.get(`api/Biblioteca/${me.institucion}/ListaBibliotecaLibrosTemas`, configuracion, { timeout: 30000 });
         me.librosTemas = response.data;
+        console.log(response.data)
+        console.log(this.librosTemas)
 
       } catch (error) {
         console.log(error);
@@ -274,12 +285,14 @@ export default {
       });
     },
 
+    /* funcion para mostrar ventana {#ff3399} */
     showTCRUD(item, accion) {
       if (accion != 'Crear') {
         this.libroTema = item;
         console.log(this.libroTema)
       }
       this.accion = accion;
+      console.log(accion)
       this.random_LT = Math.random();
       this.dialogLTCRUD = true;
     },

@@ -28,10 +28,11 @@
 
                 <v-col cols="3" style="text-align:right">
 
+                    <!-- Nuevo Registro Disciplinario Btn /*{#ff3399}*/ :to="{ name: 'nuevoRegistroConducta' }" -->
                     <v-tooltip left slot="activator">
                       <template #activator="{ on: onTooltip }">
                         <v-btn
-                          :to="{ name: 'nuevoRegistroConducta' }"
+                          @click="showTCRUD(null,'Crear')" 
                           class="mx-2 hidden-sm-and-down"
                           v-on="onTooltip"
                           fab
@@ -98,6 +99,13 @@
               </v-container>
 
     </v-flex>
+    <!-- convivencia.descripcion -->
+    <v-dialog v-model="dialogLTCRUD" persistent max-width="800px">
+      <v-form @submit.prevent="enviaDatos()" ref="form" lazy-validation>
+          <NuevoRegistro />
+      </v-form>
+    </v-dialog>
+
   </v-layout>
 
 </template>
@@ -106,6 +114,10 @@
 
 import axios from "axios";
 import Alerts from "@/components/Public/Alerts";
+import NuevoRegistro from "../../components/Convivencia/NuevoRegistroConducta.vue"
+
+//TODO: VER PORQUE NO MATCHEA IMPORTACION CON TAG (105 | 117)
+
 
 export default {
   data() {
@@ -121,8 +133,21 @@ export default {
       convivenciaValues: [],
       alertDlg: false,
       loadingData: false,
+
+     /* Props Strings {#c6ed97} */
       random_LT: "",
       accion: "",
+
+       
+      /* objeto convivencia {#c6ed97} */
+      convivencia :{
+        id: "",
+        tipoID: "",
+        descripcion:""
+      },
+
+  
+
       dialogLTCRUD: false,
       dlgDeleteConfirm: false,
       selID: "",
@@ -167,6 +192,7 @@ export default {
         const data = await axios.get(`api/Convivencia/${me.institucion},${me.incumplimientoID}/ListaConvivencia`, configuracion, { timeout: 30000 });
         // console.log(data.data);
         me.convivenciaValues = data.data;
+        console.log(this.convivenciaValues)
         me.loadingData = false
       } catch (error) {
           this.$emit(
@@ -188,8 +214,8 @@ export default {
       me.loadingLCT = true
       try {
         const data = await axios.get(`api/Convivencia/${me.institucion}/ListaConvivenciaTipos`, configuracion, { timeout: 30000 });
-        console.log(data.data)
         me.aIncumplimientos = data.data
+        console.log(this.aIncumplimientos)
         me.loadingLCT = false
       } catch (error) {
         console.log(error)
@@ -306,6 +332,24 @@ export default {
       });
     },
 
+    /* funcion para mostrar ventana {#ff3399} */
+    showTCRUD(item, accion) {
+      if (accion != 'Crear') {
+        this.libroTema = item;
+        console.log(this.libroTema)
+      }
+      this.accion = accion;
+      console.log(accion)
+      this.random_LT = Math.random();
+      this.dialogLTCRUD = true;
+    },
+
+    closeLTCRUD() {
+      this.dialogLTCRUD = false;
+      this.$refs.form.resetValidation();
+      this.LimpiaDatos();
+    },
+
     LimpiaDatos() {
       this.accion = "";
       this.convivencia = {
@@ -314,6 +358,15 @@ export default {
         descripcion:""
       }
     },
+  },
+
+  showAlert(tipo, mensaje) {
+    this.snackbar = false;
+    this.alertColor = tipo;
+    this.alertMessage = mensaje;
+    this.snackbar = "mostrar";
+    this.alertDlg = true;
+    this.closeAlert();
   },
 
 };

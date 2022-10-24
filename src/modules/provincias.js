@@ -9,9 +9,11 @@ export default {
     mutations: {
         cargaSQL(state, payload) {
             state.carga = payload
+            console.log(state.carga)
         },
         cargarProvincias(state, payload) {
             state.provincias = payload
+            console.log(state.provincias)
         },
     },
     actions: {

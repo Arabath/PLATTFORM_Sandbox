@@ -1,7 +1,8 @@
 
 <template>
   <v-card class="mx-auto" color="#ffffff">
-    
+
+    <!-- /* header crear libro tema {#55ff33} */ -->
     <v-toolbar flat color="#f0f2f5">
       <v-row>
         <v-col md="auto" style="padding-top:15px; padding-left:20px">
@@ -17,6 +18,8 @@
 
     <v-card-text style="padding-left:15px; padding-right:15px">
       <v-container style="padding-left:0px; padding-right:0px">
+
+      <!--  Input crear nuevo libro tema  /* {#af33ff} */ -->
         <v-row>
           <v-col cols="2">
           </v-col>
@@ -26,6 +29,8 @@
             </v-text-field>
           </v-col>
         </v-row>
+
+        <!-- /* Botonera {#33ddff} */ -->
         <v-row>
           <v-col cols="12" class="text-right">
             <v-btn @click="Cerrar()" depressed class="pr-8">
@@ -38,6 +43,7 @@
             </v-btn>
           </v-col>
         </v-row>
+     
       </v-container>
     </v-card-text>
   
@@ -49,10 +55,14 @@
 export default {
 
   props: {
+
+    /* props traidas desde GestionLibrosTemas {#c6ed97} */
     libroTema: Object,
     accion: "",
     random_LT: "",
+
   },
+
   data() {
     return {
       rules: {
@@ -60,9 +70,11 @@ export default {
         counter: (value) => value.length <= 20 || "Maximo 20 caracteres",
       },
       msg: [],
-      temaa: ""
+      tema: ""
     };
   },
+
+  /* bloquea boton Guardar si no hay nada escrito en el text field {#ffdf2a} */
   computed: {
     bloquearSubmit() {
       return this.libroTema.tema.trim() === ""

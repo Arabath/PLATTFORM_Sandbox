@@ -5,7 +5,7 @@
       <v-row>
         <v-col>
           <v-card class="px-3 py-1">
-            <!-- config seteo para header {#df00f5} -->
+            /* config seteo para header {#df00f5} */
             <v-data-table
               :headers="cabecerapersonas"
               :items="personas"
@@ -22,7 +22,7 @@
                 {{ item.apellido + " " + item.nombres }}
               </template>
               
-              <!-- menu opciones {#f50000} -->
+              /* menu opciones {#f50000} */
               <template v-slot:[`item.opciones`]="{ item }">
                 <v-menu
                   left
@@ -69,7 +69,7 @@
                 </v-menu>
               </template>
               
-              <!-- Titulo, busqueda y boton "Nueva Persona" {#3ff500}-->
+              /* Titulo, busqueda y boton "Nueva Persona" {#3ff500} */
               <template v-slot:top>
                 <v-toolbar flat color="white">
                   <v-toolbar-title>Personas</v-toolbar-title>
@@ -108,7 +108,7 @@
 
             </v-data-table>
 
-            <!-- Paginacion {#009cf5} -->
+            /* Paginacion {#009cf5} */
             <div class="text-center pt-2">
               <v-pagination
                 v-model="page"
