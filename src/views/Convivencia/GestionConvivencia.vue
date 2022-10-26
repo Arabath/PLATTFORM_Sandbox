@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <v-flex >
+      <v-flex >
 
         <v-overlay :value="loadingData">
             <v-progress-circular indeterminate size="64"></v-progress-circular>          
@@ -46,10 +46,8 @@
                       </template>
                       <span>Nuevo Registo Disciplinario</span>
                     </v-tooltip>
-
-                </v-col>
-
-
+                
+                  </v-col>
               </v-row>
 
               <v-container>
@@ -61,50 +59,19 @@
                     class="elevation-1"
                     hide-default-footer
                   >
-                      <!----------- SOLICITANTE ------------>
-                      <!-- <template v-slot:[`item.convivencia`]="props"> 
-                        <span style="color:#336699">
-                          {{props.item.convivencia}}
-                        </span>
-                      </template>
- -->
-
-                      <!----------- OBSERVACIONES ------------>
-                      <!-- <template v-slot:[`item.Acciones`]="{ item }" >
-
-                        <v-tooltip bottom slot="activator">
-                          <template
-                            #activator="{ on: onTooltip }"
-                          >
-                          <v-btn
-                              v-show="item.observaciones"
-                              color="green"
-                              v-on="onTooltip"
-                              fab
-                              x-small
-                              dark
-                              @click="showObservaciones(item.observaciones )"
-                          >
-                            <v-icon>mdi-file-document</v-icon>
-                          </v-btn>
-                          </template>
-                          <span>
-                            Observaciones
-                          </span>
-                        </v-tooltip>
-                      </template>
- -->
                   </v-data-table>
                 </v-card>
               </v-container>
+      </v-flex>
 
-    </v-flex>
     <!-- convivencia.descripcion /*{#bad1f3}*/-->
     <v-dialog v-model="dialogLTCRUD" persistent max-width="800px">
       <v-form  ref="form" lazy-validation>
           <NuevoRegistroConducta 
             :random_LT="random_LT" 
             :convivencia="convivencia" 
+            :Incumplimiento="aIncumplimientos"
+            :incumplimiento_ID="incumplimientoID"
             :accion="accion"
             @closeLTCRUD="closeLTCRUD" 
           />
@@ -112,7 +79,6 @@
     </v-dialog>
 
   </v-layout>
-
 </template>
 
 <script>
@@ -122,8 +88,6 @@ import Alerts from "@/components/Public/Alerts";
 import NuevoRegistroConducta from '../../components/Convivencia/NuevoRegistroConducta.vue';
 
 export default {
-
-
   data() {
     return {
       page: 1,
@@ -139,21 +103,13 @@ export default {
       convivenciaValues: [],
       alertDlg: false,
       loadingData: false,
-
-     /* Props Strings {#c6ed97} */
       random_LT: "",
       accion: "",
-
-       
-      /* objeto convivencia {#c6ed97} */
       convivencia :{
         id: "",
         tipoID: "",
         descripcion:""
       },
-
-  
-
       dialogLTCRUD: false,
       dlgDeleteConfirm: false,
       selID: "",
@@ -162,6 +118,7 @@ export default {
       incumplimientoID:""
     };
   },
+
   computed: {
     usuarioID() {
       return this.$store.state.usuario.idusuario;

@@ -19,10 +19,10 @@
       </v-row>
     </v-toolbar>
 
+    
     <v-card-text style="padding-left:15px; padding-right:15px">
       <v-container style="padding-left:0px; padding-right:0px">
-
-      <!--  Input crear nuevo libro tema  /* {#af33ff} */ -->
+    <!--  Input crear nuevo libro tema  /* {#af33ff} */ -->
         <v-row>
           <v-col cols="2">
           </v-col>
