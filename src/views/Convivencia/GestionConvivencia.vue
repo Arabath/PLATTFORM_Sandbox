@@ -62,15 +62,15 @@
                     hide-default-footer
                   >
                       <!----------- SOLICITANTE ------------>
-                      <template v-slot:[`item.convivencia`]="props"> 
+                      <!-- <template v-slot:[`item.convivencia`]="props"> 
                         <span style="color:#336699">
                           {{props.item.convivencia}}
                         </span>
                       </template>
-
+ -->
 
                       <!----------- OBSERVACIONES ------------>
-                      <template v-slot:[`item.Acciones`]="{ item }" >
+                      <!-- <template v-slot:[`item.Acciones`]="{ item }" >
 
                         <v-tooltip bottom slot="activator">
                           <template
@@ -93,7 +93,7 @@
                           </span>
                         </v-tooltip>
                       </template>
-
+ -->
                   </v-data-table>
                 </v-card>
               </v-container>
@@ -102,7 +102,10 @@
     <!-- convivencia.descripcion /*{#bad1f3}*/-->
     <v-dialog v-model="dialogLTCRUD" persistent max-width="800px">
       <v-form  ref="form" lazy-validation>
-          <NuevoRegistroConducta :random_LT="random_LT" :convivencia="convivencia" :accion="accion"
+          <NuevoRegistroConducta 
+            :random_LT="random_LT" 
+            :convivencia="convivencia" 
+            :accion="accion"
             @closeLTCRUD="closeLTCRUD" 
           />
       </v-form>
@@ -129,7 +132,9 @@ export default {
       search: "",
       convivenciaHeader: [
         {text:"CONVIVENCIA", value:'convivencia'},
-        {text:"", value:'Acciones'},
+        {text:"Tipo", value:'tipo'},
+        {text:"tipoID", value:'tipoID'},
+        {text:"ID", value:"id"}
       ],
       convivenciaValues: [],
       alertDlg: false,
