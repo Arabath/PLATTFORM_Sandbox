@@ -66,7 +66,7 @@
 
     <!-- convivencia.descripcion /*{#bad1f3}*/-->
     <v-dialog v-model="dialogLTCRUD" persistent max-width="800px">
-      <v-form  ref="form" lazy-validation>
+      <v-form @submit.prevent="enviaDatos()" ref="form" lazy-validation>
           <NuevoRegistroConducta 
             :random_LT="random_LT" 
             :convivencia="convivencia" 
@@ -135,7 +135,8 @@ export default {
   },
 
   created() {
-    this.ListaConvivenciaTipos();
+    this.ListaConvivenciaTipos()
+ 
   },
 
   components: {
@@ -146,6 +147,39 @@ export default {
 
   methods: {
 
+
+    async enviaDatos() {
+      if (this.accion === 'Crear') {
+        const paso1 = await this.CreaConvivencia();
+        console.log("CreaConvivencia")
+      }
+      else {
+        const paso2 = await this.EditarConvivencia()
+        console.log("EditarConvivencia")
+      }
+      const paso3 = await this.closeLTCRUD();
+    },
+
+    // Incumplimiento o Reconocimiento 
+    async ListaConvivenciaTipos() {
+      //console.log(this.institucion)
+      let header = { Authorization: "Bearer " + this.$store.state.token }
+      let configuracion = { headers: header }
+      let me = this
+      me.loadingLCT = true
+      try {
+        const response = await axios.get(`api/Convivencia/${me.institucion}/ListaConvivenciaTipos`, configuracion, { timeout: 30000 });
+        me.aIncumplimientos = response.data
+        console.log(me.aIncumplimientos)
+        me.loadingLCT = false
+      } catch (error) {
+        console.log(error)
+      } finally {
+        me.loadingLCT = false
+      }
+    },
+
+    // Codigo de tipos de convivencia
     async ListaConvivencia() {
       this.loadingLCT = true;
       let header = { Authorization: "Bearer " + this.$store.state.token };
@@ -153,10 +187,10 @@ export default {
       let me = this;
       me.loadingData = true
       try {
-        const data = await axios.get(`api/Convivencia/${me.institucion},${me.incumplimientoID}/ListaConvivencia`, configuracion, { timeout: 30000 });
+        const response = await axios.get(`api/Convivencia/${me.institucion},${me.incumplimientoID}/ListaConvivencia`, configuracion, { timeout: 30000 });
         // console.log(data.data);
-        me.convivenciaValues = data.data;
-        console.log(this.convivenciaValues)
+        me.convivenciaValues = response.data;
+        console.log(me.convivenciaValues)
         me.loadingData = false
       } catch (error) {
           this.$emit(
@@ -167,39 +201,6 @@ export default {
         console.log(error);
       } finally {
         me.loadingLCT = false
-      }
-    },
-
-    async ListaConvivenciaTipos() {
-      //console.log(this.institucion)
-      let header = { Authorization: "Bearer " + this.$store.state.token }
-      let configuracion = { headers: header }
-      let me = this
-      me.loadingLCT = true
-      try {
-        const data = await axios.get(`api/Convivencia/${me.institucion}/ListaConvivenciaTipos`, configuracion, { timeout: 30000 });
-        me.aIncumplimientos = data.data
-        console.log(this.aIncumplimientos)
-        me.loadingLCT = false
-      } catch (error) {
-        console.log(error)
-      } finally {
-        me.loadingLCT = false
-      }
-    },
-
-    async ListaConvivenciaCRUD() {
-      let header = { Authorization: "Bearer " + this.$store.state.token };
-      let configuracion = { headers: header };
-      let me = this;
-      me.loadingData = true
-      try {
-        const data = await axios.get(`api/Convivencia/${me.institucion}/ListaConvivenciaCRUD`, configuracion, { timeout: 30000 });
-        console.log(data.data)
-      } catch (error) {
-        console.log(error);
-      } finally {
-        me.loadingData = false
       }
     },
 

@@ -56,7 +56,7 @@
       </v-row> -->
       <v-row>
         <v-col>
-          <v-text-field >
+          <v-text-field id="convivencia" v-model="convivencia.descripcion">
             
           </v-text-field>
         </v-col>

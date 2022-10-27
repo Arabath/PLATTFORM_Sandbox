@@ -51,13 +51,22 @@
                   <!-- Nuevo Tema Btn /*{#ff3399}*/ -->
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                      <v-btn class="mx-2" v-on="on" fab dark small color="cyan" @click="showTCRUD(null,'Crear')"
-                        style="margin-top: 10px">
+                      <v-btn 
+                        @click="showTCRUD(null,'Crear')"
+                        class="mx-2" 
+                        v-on="on" 
+                        fab 
+                        dark 
+                        small 
+                        color="cyan" 
+                        style="margin-top: 10px"
+                      >
                         <v-icon dark>mdi-pencil</v-icon>
                       </v-btn>
                     </template>
                     <span class="tooltip">Nuevo Tema</span>
                   </v-tooltip>
+                
                 </v-toolbar>
               </template>
 
@@ -76,8 +85,13 @@
     <!-- ventana dialogo "nuevo tema" /*{#bad1f3}*/ -->
     <v-dialog v-model="dialogLTCRUD" persistent max-width="800px">
       <v-form @submit.prevent="enviaDatos()" ref="form" lazy-validation>
-        <LibrosTemasFormCRUD :random_LT="random_LT" :libroTema="libroTema" :accion="accion" @closeLTCRUD="closeLTCRUD"
-          @showAlert="showAlert" />
+        <LibrosTemasFormCRUD 
+          :random_LT="random_LT" 
+          :libroTema="libroTema" 
+          :accion="accion" 
+          @closeLTCRUD="closeLTCRUD"
+          @showAlert="showAlert" 
+        />
       </v-form>
     </v-dialog>
 
@@ -124,19 +138,14 @@ export default {
       librosTemas: [],
       alertDlg: false,
       loadingData: false,
-
-      /* Props Strings {#c6ed97} */
       random_LT: "",
       accion: "",
-      
       dialogLTCRUD: false,
-
       /* objeto libroTema {#c6ed97} */
       libroTema: {
         id: "",
         tema: "",
       },
-
       dlgDeleteConfirm: false,
       selID: "",
     };
@@ -238,6 +247,7 @@ export default {
         me.sortArrays(me.librosTemas);
         this.showAlert("green",
           "Registro eliminado con exito")
+        console.log(response)  
       } catch (error) {
         console.log(error);
         console.log(error.response.data);
@@ -262,8 +272,6 @@ export default {
         const response = await axios.get(`api/Biblioteca/${me.institucion}/ListaBibliotecaLibrosTemas`, configuracion, { timeout: 30000 });
         me.librosTemas = response.data;
         console.log(response.data)
-        console.log(this.librosTemas)
-
       } catch (error) {
         console.log(error);
       } finally {
