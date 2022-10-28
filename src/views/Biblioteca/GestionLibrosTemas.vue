@@ -11,12 +11,12 @@
         <v-col>
           <v-card class="px-3 py-1">
             
-            <!-- comienzo data-table {#ff5733} -->
+            <!-- comienzo data-table /* {#ff5733} */ -->
             <v-data-table :headers="caberaLibrosTemas" :items="librosTemas" :search="search" :page.sync="page"
               :items-per-page="itemsPerPage" hide-default-footer @page-count="pageCount = $event" class="elevation-1"
               v-if="!loadingData">
               
-              <!-- botones editar y eliminar tema {#e173ff} -->
+              <!-- botones editar y eliminar tema /* {#e173ff} */ -->
               <template v-slot:[`item.Acciones`]="{ item }">
                 <v-tooltip bottom slot="activator">
                   <template #activator="{ on: onTooltip }">
@@ -37,7 +37,7 @@
                 </v-tooltip>
               </template>
 
-              <!-- busqueda  -->
+              <!-- busqueda  /* {#2afffc} */-->
               <template v-slot:top>
                 <v-toolbar flat color="white">
                   <v-toolbar-title>Libros Temas</v-toolbar-title>
@@ -70,7 +70,7 @@
                 </v-toolbar>
               </template>
 
-              <!-- fin data-table {#ff5733} -->
+              <!-- fin data-table /*{#ff5733}*/ -->
             </v-data-table>
 
             <div class="text-center pt-2">
@@ -95,7 +95,7 @@
       </v-form>
     </v-dialog>
 
-    <!-- ventana dialogo para confirmar eliminar tema {#dff3ba} -->
+    <!-- ventana dialogo para confirmar eliminar tema /*{#dff3ba}*/ -->
     <v-dialog v-model="dlgDeleteConfirm" persistent max-width="600">
       <v-card class="pt-5" style="border:5px solid #ff8888">
         <v-card-text>
@@ -140,12 +140,11 @@ export default {
       loadingData: false,
       random_LT: "",
       accion: "",
-      dialogLTCRUD: false,
-      /* objeto libroTema {#c6ed97} */
       libroTema: {
         id: "",
         tema: "",
       },
+      dialogLTCRUD: false,
       dlgDeleteConfirm: false,
       selID: "",
     };
@@ -179,11 +178,14 @@ export default {
     async enviaDatos() {
       if (this.accion === 'Crear') {
         const paso1 = await this.CrearBibliotecaLibrosTema();
+        console.log("crearBibliotecaLibrosTema")
       }
       else {
         const paso2 = await this.EditarBibliotecaLibrosTema()
+        console.log("EditarBibliotecaLibrosTemas")
       }
       const paso3 = await this.closeLTCRUD();
+      console.log("closeLTCRUD")
     },
 
     async CrearBibliotecaLibrosTema() {

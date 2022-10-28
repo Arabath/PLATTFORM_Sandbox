@@ -101,6 +101,11 @@ const routes = [
     component: () => import('../components/Convivencia/NuevoRegistroConducta.vue'),
     meta: {
       administrador: true,
+      preceptor: true,
+      docente: true,
+      EOE: true,
+      administrador: true,
+      admin: true
     }
   },
   

@@ -30,11 +30,11 @@
 
                     <!-- Nuevo Registro Disciplinario Btn /*{#ff3399}*/ :to="{ name: 'nuevoRegistroConducta' }" -->
                     <v-tooltip left slot="activator">
-                      <template #activator="{ on: onTooltip }">
+                      <template #activator="{ on }">
                         <v-btn
                           @click="showTCRUD(null,'Crear')" 
                           class="mx-2 hidden-sm-and-down"
-                          v-on="onTooltip"
+                          v-on="on"
                           fab
                           dark
                           medium
@@ -90,10 +90,6 @@ import NuevoRegistroConducta from '../../components/Convivencia/NuevoRegistroCon
 export default {
   data() {
     return {
-      page: 1,
-      pageCount: 0,
-      itemsPerPage: 10,
-      search: "",
       convivenciaHeader: [
         {text:"CONVIVENCIA", value:'convivencia'},
         {text:"Tipo", value:'tipo'},
@@ -118,7 +114,6 @@ export default {
       incumplimientoID:""
     };
   },
-
   computed: {
     usuarioID() {
       return this.$store.state.usuario.idusuario;
@@ -136,7 +131,6 @@ export default {
 
   created() {
     this.ListaConvivenciaTipos()
- 
   },
 
   components: {
@@ -146,8 +140,6 @@ export default {
   },
 
   methods: {
-
-
     async enviaDatos() {
       if (this.accion === 'Crear') {
         const paso1 = await this.CreaConvivencia();

@@ -54,14 +54,18 @@
         />        
         </v-col>
       </v-row> -->
+      
       <v-row>
         <v-col>
-          <v-text-field id="convivencia" v-model="convivencia.descripcion">
-            
+          <v-text-field 
+            id="convivencia.tipoID" 
+            v-model="convivencia.descripcion"
+            label="Ingrese tipo de convivencia"
+          >               
           </v-text-field>
         </v-col>
       </v-row>
-      
+
 
       <!-- /* Botonera {#33ddff} */ -->
       <v-row>
