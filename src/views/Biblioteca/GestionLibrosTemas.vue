@@ -260,6 +260,7 @@ export default {
             "No se pudo eliminar el registro porque esta relacionado con un campo de otra tabla")
         }
       } finally {
+        
         me.loadingData = false;
         me.closeDeleteConfirm();
       }
@@ -346,10 +347,6 @@ export default {
       }, 3000);
     },
   },
-
-
-
-
 
 };
 </script>

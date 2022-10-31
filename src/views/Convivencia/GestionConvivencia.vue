@@ -58,8 +58,51 @@
                     :disable-pagination="false"
                     class="elevation-1"
                     hide-default-footer
+                    v-if="!loadingData"
                   >
-                  </v-data-table>
+
+                  <!-- botones editar y eliminar tema /* {#e173ff} */ -->
+                  <template v-slot:[`item.Acciones`]="{ item }">
+                    <v-tooltip bottom slot="activator">
+                      <template #activator="{ on: onTooltip }">
+                        <v-btn color="#999999" v-on="onTooltip" fab x-small dark @click="showTCRUD(item,'Editar')">
+                          <v-icon size='16'>mdi-file-document-edit-outline</v-icon>
+                        </v-btn>
+                      </template>
+                      <span class="tooltip_small">Editar Tema</span>
+                    </v-tooltip>
+                    &nbsp;&nbsp;
+                    <v-tooltip bottom slot="activator">
+                      <template #activator="{ on: onTooltip }">
+                        <v-btn color="#ff8888" v-on="onTooltip" fab x-small dark @click="showDeleteConfirm(item.id)">
+                          <v-icon size='16'>mdi-trash-can-outline</v-icon>
+                        </v-btn>
+                      </template>
+                      <span class="tooltip_small">Eliminar Tema</span>
+                    </v-tooltip>
+                  </template> 
+
+                  
+                </v-data-table>
+                  <!-- ventana dialogo para confirmar eliminar tema /*{#dff3ba}*/ -->
+                  <v-dialog v-model="dlgDeleteConfirm" persistent max-width="700">
+                    <v-card class="pt-5" style="border:5px solid #ff8888">
+                      <v-card-text>
+                        <v-card-title class="headline">Esta seguro que desea eliminar el Codigo de Convivencia seleccionado?</v-card-title>
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn text depressed large @click="closeDeleteConfirm()">Cancelar</v-btn>
+                        <v-btn class="my-2" depressed large color="#ff8888" dark @click="EliminarConvivencia()"
+                          style="padding-left: 10px; padding-right: 10px">Eliminar</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+
+                  <template v-if="alertDlg">
+                    <Alerts :alertColor="alertColor" :alertMessage="alertMessage" :snackbar="snackbar" />
+                  </template> 
+
                 </v-card>
               </v-container>
       </v-flex>
@@ -74,6 +117,7 @@
             :incumplimiento_ID="incumplimientoID"
             :accion="accion"
             @closeLTCRUD="closeLTCRUD" 
+            @showAlert="showAlert" 
           />
       </v-form>
     </v-dialog>
@@ -93,8 +137,7 @@ export default {
       convivenciaHeader: [
         {text:"CONVIVENCIA", value:'convivencia'},
         {text:"Tipo", value:'tipo'},
-        {text:"tipoID", value:'tipoID'},
-        {text:"ID", value:"id"}
+        { text: "", value: "Acciones", sortable: false, align: 'right', }
       ],
       convivenciaValues: [],
       convivencias:[],
@@ -137,7 +180,6 @@ export default {
   components: {
     Alerts,
     NuevoRegistroConducta
-   
   },
 
   methods: {
@@ -198,9 +240,6 @@ export default {
     },
 
     async CreaConvivencia() {
-      console.log(this.convivencia.id)
-      console.log(this.convivencia.tipoID)
-      console.log(this.convivencia.descripcion)
       let header = { Authorization: "Bearer " + this.$store.state.token };
       let configuracion = { headers: header };
       let me = this;
@@ -221,6 +260,7 @@ export default {
         me.loadingData = false
         me.LimpiaDatos();
         me.sortArrays(me.convivencias);
+        me.ListaConvivencia();
       }
     },
 
@@ -233,7 +273,7 @@ export default {
         const response = await axios.post(`api/Convivencia/${me.institucion}/EditarConvivencia`,
           {
             id: me.convivencia.id,
-            tipoID: me.convivencia.tipoID,
+            tipoID: me.incumplimientoID,
             descripcion: me.convivencia.descripcion,
           },
           configuracion);
@@ -249,6 +289,8 @@ export default {
         me.loadingData = false
         me.LimpiaDatos();
         me.sortArrays(me.convivencias);
+        me.ListaConvivencia()
+        console.log(me.ListaConvivencia())
       }
     },
 
@@ -266,6 +308,7 @@ export default {
         me.sortArrays(me.convivencias);
         this.showAlert("green",
           "Registro eliminado con exito")
+          console.log(response)  
       } catch (error) {
         console.log(error);
         console.log(error.response.data);
@@ -278,6 +321,7 @@ export default {
       } finally {
         me.loadingData = false;
         me.closeDeleteConfirm();
+        me.ListaConvivencia();
       }
     },
 
@@ -313,6 +357,15 @@ export default {
       this.LimpiaDatos();
     },
 
+    showDeleteConfirm(id) {
+      this.selID = id;
+      this.dlgDeleteConfirm = true;
+    },
+
+    closeDeleteConfirm() {
+      this.dlgDeleteConfirm = false;
+    },
+
     LimpiaDatos() {
       this.accion = "";
       this.convivencia = {
@@ -321,7 +374,6 @@ export default {
         descripcion:""
       }
     },
-  
 
   showAlert(tipo, mensaje) {
     this.snackbar = false;
@@ -331,7 +383,14 @@ export default {
     this.alertDlg = true;
     this.closeAlert();
   },
-},
+
+  closeAlert: function () {
+      setTimeout(() => {
+        (this.snackbar = ""), (this.alertDlg = false);
+      }, 3000);
+    },
+  
+  },
 };
 </script>
 
