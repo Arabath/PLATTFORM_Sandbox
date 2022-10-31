@@ -97,6 +97,7 @@ export default {
         {text:"ID", value:"id"}
       ],
       convivenciaValues: [],
+      convivencias:[],
       alertDlg: false,
       loadingData: false,
       random_LT: "",
@@ -197,6 +198,9 @@ export default {
     },
 
     async CreaConvivencia() {
+      console.log(this.convivencia.id)
+      console.log(this.convivencia.tipoID)
+      console.log(this.convivencia.descripcion)
       let header = { Authorization: "Bearer " + this.$store.state.token };
       let configuracion = { headers: header };
       let me = this;
@@ -204,10 +208,12 @@ export default {
       try {
         const response = await axios.post(`api/Convivencia/${me.institucion}/CreaConvivencia`,
           {
-            tipoID: me.convivencia.tipoID,
+            tipoID:  me.incumplimientoID,
             descripcion: me.convivencia.descripcion,
           },
           configuracion);
+          console.log(response)
+      
         me.convivencias.push(response.data[0])
       } catch (error) {
         console.log(error);
