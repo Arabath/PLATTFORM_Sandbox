@@ -15,7 +15,6 @@
       </v-row>
     </v-toolbar>
 
-    
     <v-card-text style="padding-left:15px; padding-right:15px">
       <v-container style="padding-left:0px; padding-right:0px">
     <!--  Input crear nuevo libro tema  /* {#af33ff} */ -->
@@ -42,7 +41,7 @@
             </v-btn>
           </v-col>
         </v-row>
-     
+
       </v-container>
     </v-card-text>
   

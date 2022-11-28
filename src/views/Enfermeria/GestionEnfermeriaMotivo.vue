@@ -1,15 +1,17 @@
 <template>
   <v-layout>
     <v-flex>
+      <!-- Spinner carga -->
       <v-overlay :value="loadingData">
         <v-progress-circular indeterminate size="64"></v-progress-circular>
       </v-overlay>
 
       <v-row>
         <v-col>
+          <!-- comienzo data-table /* {#ff5733} */ -->
           <v-card class="px-3 py-1">
             <v-data-table
-              :headers="cabeceraEnfermeriaMotivos"
+              :headers="caberaEnfermeriaMotivos"
               :items="enfermeriaMotivos"
               :search="search"
               :page.sync="page"
@@ -19,6 +21,7 @@
               class="elevation-1"
               v-if="!loadingData"
             >
+            <!-- botones editar y eliminar tema /* {#e173ff} */ -->
               <template v-slot:[`item.Acciones`]="{ item }">
                 <v-tooltip bottom slot="activator">
                   <template #activator="{ on: onTooltip }">
@@ -52,6 +55,8 @@
                   <span class="tooltip_small">Eliminar Motivo</span>
                 </v-tooltip>
               </template>
+
+              
               <template v-slot:top>
                 <v-toolbar flat color="white">
                   <v-toolbar-title>Enfermería Motivos</v-toolbar-title>
@@ -68,16 +73,17 @@
                     dense
                   ></v-text-field>
                   <v-spacer></v-spacer>
+
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn
+                        @click="showEMCRUD(null, 'Crear')"
                         class="mx-2"
                         v-on="on"
                         fab
                         dark
                         small
                         color="cyan"
-                        @click="showEMCRUD(null, 'Crear')"
                         style="margin-top: 10px"
                       >
                         <v-icon dark>mdi-pencil</v-icon>
@@ -87,6 +93,7 @@
                   </v-tooltip>
                 </v-toolbar>
               </template>
+
             </v-data-table>
             <div class="text-center pt-2">
               <v-pagination
@@ -153,7 +160,7 @@
 <script>
 import axios from "axios";
 import Alerts from "@/components/Public/Alerts";
-import EnfermeriaMotivoCRUD from '../../components/Enfermeria/EnfermeriaMotivoCRUD'
+import EnfermeriaMotivoCRUD from '@/components/Enfermeria/EnfermeriaMotivoCRUD'
 
 export default {
   data() {
@@ -162,7 +169,7 @@ export default {
       pageCount: 0,
       itemsPerPage: 10,
       search: "",
-      cabeceraEnfermeriaMotivos: [
+      caberaEnfermeriaMotivos: [
         { text: "ID", value: "motivoID", sortable: false, align: "d-none" },
         { text: "Motivo", value: "motivo" },
         { text: "", value: "Acciones", sortable: false, align: "right" },

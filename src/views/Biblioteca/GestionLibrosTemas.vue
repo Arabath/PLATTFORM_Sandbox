@@ -183,9 +183,9 @@ export default {
       loadingData: false,
       random_LT: "",
       accion: "",
-        librosTemas: {
-        id: "",
-        tema: "",
+      librosTemas: {
+      id: "",
+      tema: "",
       },
       dialogLTCRUD: false,
       dlgDeleteConfirm: false,
