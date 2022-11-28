@@ -174,7 +174,6 @@ export default {
   },
 
   methods: {
-
     async enviaDatos() {
       if (this.accion === 'Crear') {
         const paso1 = await this.CrearBibliotecaLibrosTema();
@@ -347,7 +346,6 @@ export default {
       }, 3000);
     },
   },
-
 };
 </script>
 
