@@ -102,7 +102,7 @@
 
     <v-dialog v-model="dialogEMCRUD" persistent max-width="800px">
       <v-form @submit.prevent="enviaDatos()" ref="form" lazy-validation>
-        <ConvivenciaConceptosFormCRUD
+        <EnfermeriaMotivoCRUD
           :random_EM="random_EM"
           :enfermeriaMotivo="enfermeriaMotivo"
           :accion="accion"
@@ -153,6 +153,7 @@
 <script>
 import axios from "axios";
 import Alerts from "@/components/Public/Alerts";
+import EnfermeriaMotivoCRUD from '../../components/Enfermeria/EnfermeriaMotivoCRUD'
 
 export default {
   data() {
@@ -201,6 +202,7 @@ export default {
 
   components: {
     Alerts,
+    EnfermeriaMotivoCRUD,
   },
 
   methods: {
@@ -212,7 +214,7 @@ export default {
         const paso2 = await this.ActualizarEnfermeriaMotivo();
         console.log("EditaMotivo");
       }
-      const paso3 = await this.closeCCCRUD();
+      const paso3 = await this.closeEMCRUD();
       console.log("CerrarCRUD");
     },
 
@@ -336,7 +338,7 @@ export default {
     showEMCRUD(item, accion) {
       if (accion != 'Crear') {
         this.enfermeriaMotivo.motivo = item.motivo;
-        this.enfermeriaMotivo.motivoID = item.motivoID;
+        this.enfermeriaMotivo.motivoID = item.id;
         console.log(this.enfermeriaMotivo)
       }
       this.accion = accion;
