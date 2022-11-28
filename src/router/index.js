@@ -95,6 +95,19 @@ const routes = [
       admin: true
     }
   },
+  {
+    path: '/gestionEnfermeria',
+    name: 'gestionEnfermeria',
+    component: () => import('../views/Enfermeria/GestionEnfermeriaMotivo.vue'),
+    meta: {
+      directivo: true,
+      preceptor: true,
+      docente: true,
+      EOE: true,
+      administrador: true,
+      admin: true
+    }
+  },
 ]
 
 const router = new VueRouter({

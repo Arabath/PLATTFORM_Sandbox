@@ -9,8 +9,8 @@
         <v-col>
           <v-card class="px-3 py-1">
             <v-data-table
-              :headers="caberaConvivenciaConceptos"
-              :items="convivencias"
+              :headers="cabeceraEnfermeriaMotivos"
+              :items="enfermeriaMotivos"
               :search="search"
               :page.sync="page"
               :items-per-page="itemsPerPage"
@@ -28,12 +28,12 @@
                       fab
                       x-small
                       dark
-                      @click="showCCRUD(item, 'Editar')"
+                      @click="showEMCRUD(item, 'Editar')"
                     >
                       <v-icon size="16">mdi-file-document-edit-outline</v-icon>
                     </v-btn>
                   </template>
-                  <span class="tooltip_small">Editar Concepto</span>
+                  <span class="tooltip_small">Editar Motivo</span>
                 </v-tooltip>
                 &nbsp;&nbsp;
                 <v-tooltip bottom slot="activator">
@@ -49,12 +49,12 @@
                       <v-icon size="16">mdi-trash-can-outline</v-icon>
                     </v-btn>
                   </template>
-                  <span class="tooltip_small">Eliminar Concepto</span>
+                  <span class="tooltip_small">Eliminar Motivo</span>
                 </v-tooltip>
               </template>
               <template v-slot:top>
                 <v-toolbar flat color="white">
-                  <v-toolbar-title>Convivencia Conceptos</v-toolbar-title>
+                  <v-toolbar-title>Enfermería Motivos</v-toolbar-title>
                   <v-divider class="mx-4" inset vertical></v-divider>
                   <v-spacer></v-spacer>
                   <v-text-field
@@ -77,13 +77,13 @@
                         dark
                         small
                         color="cyan"
-                        @click="showCCRUD(null, 'Crear')"
+                        @click="showEMCRUD(null, 'Crear')"
                         style="margin-top: 10px"
                       >
                         <v-icon dark>mdi-pencil</v-icon>
                       </v-btn>
                     </template>
-                    <span class="tooltip">Nuevo Concepto</span>
+                    <span class="tooltip">Nuevo Motivo</span>
                   </v-tooltip>
                 </v-toolbar>
               </template>
@@ -99,11 +99,58 @@
         </v-col>
       </v-row>
     </v-flex>
+
+    <v-dialog v-model="dialogEMCRUD" persistent max-width="800px">
+      <v-form @submit.prevent="enviaDatos()" ref="form" lazy-validation>
+        <ConvivenciaConceptosFormCRUD
+          :random_EM="random_EM"
+          :enfermeriaMotivo="enfermeriaMotivo"
+          :accion="accion"
+          @closeEMCRUD="closeEMCRUD"
+          @showAlert="showAlert"
+        />
+      </v-form>
+    </v-dialog>
+
+    <v-dialog v-model="dlgDeleteConfirm" persistent max-width="600">
+      <v-card class="pt-5" style="border: 5px solid #ff8888">
+        <v-card-text>
+          <v-card-title class="headline"
+            >Esta seguro que desea eliminar el Motivo
+            Seleccionado?</v-card-title
+          >
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text depressed large @click="closeDeleteConfirm()"
+            >Cancelar</v-btn
+          >
+          <v-btn
+            class="my-2"
+            depressed
+            large
+            color="#ff8888"
+            dark
+            @click="EliminarEnfermeriaMotivo()"
+            style="padding-left: 10px; padding-right: 10px"
+            >Eliminar</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <template v-if="alertDlg">
+      <Alerts
+        :alertColor="alertColor"
+        :alertMessage="alertMessage"
+        :snackbar="snackbar"
+      />
+    </template>
+
   </v-layout>
 </template>
 
 <script>
-
 import axios from "axios";
 import Alerts from "@/components/Public/Alerts";
 
@@ -122,13 +169,13 @@ export default {
       enfermeriaMotivos: [],
       alertDlg: false,
       loadingData: false,
-      random_LT: "",
+      random_EM: "",
       accion: "",
       enfermeriaMotivo: {
         motivoID: "",
         motivo: "",
       },
-      dialogLTCRUD: false,
+      dialogEMCRUD: false,
       dlgDeleteConfirm: false,
       selID: "",
     };
@@ -286,24 +333,26 @@ export default {
       });
     },
 
-    showECRUD(item, accion) {
+    showEMCRUD(item, accion) {
       if (accion != 'Crear') {
-        this.libroTema = item;
-        console.log(this.libroTema)
+        this.enfermeriaMotivo.motivo = item.motivo;
+        this.enfermeriaMotivo.motivoID = item.motivoID;
+        console.log(this.enfermeriaMotivo)
       }
       this.accion = accion;
       console.log(accion)
-      this.random_LT = Math.random();
-      this.dialogLTCRUD = true;
+      this.random_EM = Math.random();
+      this.dialogEMCRUD = true;
     },
 
     closeEMCRUD() {
-      this.dialogCCCRUD = false;
+      this.dialogEMCRUD = false;
       this.$refs.form.resetValidation();
       this.LimpiaDatos();
     },
 
     LimpiaDatos() {
+      this.accion = "";
       this.enfermeriaMotivo = {
         motivoID: "",
         motivo: "",

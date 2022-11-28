@@ -172,12 +172,12 @@ export default {
       loadingData: false,
       random_CC: "",
       accion: "",
-      dialogCCCRUD: false,
       convivencia: {
         id: "",
         tipoID: "",
         convivencia: "",
       },
+      dialogCCCRUD: false,
       dlgDeleteConfirm: false,
       selID: "",
     };
