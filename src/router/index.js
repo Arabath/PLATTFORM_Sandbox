@@ -85,7 +85,7 @@ const routes = [
   {
     path: '/gestionConvivencia',
     name: 'gestionConvivencia',
-    component: () => import('../views/Convivencia/GestionConvivencia'),
+    component: () => import('../views/Convivencia/GestionConvivenciaConceptos.vue'),
     meta: {
       directivo: true,
       preceptor: true,
@@ -95,20 +95,6 @@ const routes = [
       admin: true
     }
   },
-  {
-    path: '/nuevoRegistroConducta',
-    name: 'nuevoRegistroConducta',
-    component: () => import('../components/Convivencia/NuevoRegistroConducta.vue'),
-    meta: {
-      administrador: true,
-      preceptor: true,
-      docente: true,
-      EOE: true,
-      administrador: true,
-      admin: true
-    }
-  },
-  
 ]
 
 const router = new VueRouter({
