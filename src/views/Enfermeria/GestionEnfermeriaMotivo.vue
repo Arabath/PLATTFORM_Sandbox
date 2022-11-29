@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <v-layout align-start>
     <v-flex>
       <!-- Spinner carga -->
       <v-overlay :value="loadingData">
@@ -8,8 +8,8 @@
 
       <v-row>
         <v-col>
-          <!-- comienzo data-table /* {#ff5733} */ -->
           <v-card class="px-3 py-1">
+            <!-- comienzo data-table /* {#ff5733} */ -->
             <v-data-table
               :headers="caberaEnfermeriaMotivos"
               :items="enfermeriaMotivos"
@@ -95,6 +95,7 @@
               </template>
 
             </v-data-table>
+
             <div class="text-center pt-2">
               <v-pagination
                 v-model="page"
@@ -123,8 +124,7 @@
       <v-card class="pt-5" style="border: 5px solid #ff8888">
         <v-card-text>
           <v-card-title class="headline"
-            >Esta seguro que desea eliminar el Motivo
-            Seleccionado?</v-card-title
+            >Esta seguro que desea eliminar el MotivoSeleccionado?</v-card-title
           >
         </v-card-text>
         <v-card-actions>
@@ -153,7 +153,6 @@
         :snackbar="snackbar"
       />
     </template>
-
   </v-layout>
 </template>
 
@@ -236,6 +235,7 @@ export default {
           configuracion,
           { timeout: 30000 }
         );
+        me.enfermeriaMotivos = data.data
         console.log(data.data);
       } catch (error) {
         console.log(error);
@@ -257,6 +257,7 @@ export default {
           },
           configuracion
         );
+        console.log(response.data[0])
         me.enfermeriaMotivos.push(response.data[0]);
       } catch (error) {
         console.log(error);
@@ -344,8 +345,9 @@ export default {
 
     showEMCRUD(item, accion) {
       if (accion != 'Crear') {
-        this.enfermeriaMotivo.motivo = item.motivo;
-        this.enfermeriaMotivo.motivoID = item.id;
+        //this.enfermeriaMotivo.motivoID = item;
+        //this.enfermeriaMotivo.motivo = item.motivo;
+        this.enfermeriaMotivo = item;
         console.log(this.enfermeriaMotivo)
       }
       this.accion = accion;
@@ -371,6 +373,10 @@ export default {
     showDeleteConfirm(id) {
       this.selID = id;
       this.dlgDeleteConfirm = true;
+    },
+    
+    closeDeleteConfirm() {
+      this.dlgDeleteConfirm = false;
     },
 
     showAlert(tipo, mensaje) {

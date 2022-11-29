@@ -1,6 +1,7 @@
 <template>
   <v-layout align-start>
     <v-flex>
+      
       <v-overlay :value="loadingData">
         <v-progress-circular indeterminate size="64"></v-progress-circular>
       </v-overlay>

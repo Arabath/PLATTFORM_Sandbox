@@ -60,7 +60,6 @@ export default {
     random_LT: "",
 
   },
-
   data() {
     return {
       rules: {

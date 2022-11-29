@@ -56,6 +56,7 @@
                 </v-tooltip>
               </template>
 
+
               <!-- busqueda  /* {#2afffc} */-->
               <template v-slot:top>
                 <v-toolbar flat color="white">
@@ -174,7 +175,7 @@ export default {
       itemsPerPage: 10,
       search: "",
       caberaLibrosTemas: [
-        { text: "ID", value: "id", sortable: false, align: " d-none" },
+        { text: "ID", value: "id", sortable: false, align: "d-none" },
         { text: "Tema", value: "tema" },
         { text: "", value: "Acciones", sortable: false, align: "right" },
       ],
@@ -183,9 +184,9 @@ export default {
       loadingData: false,
       random_LT: "",
       accion: "",
-      librosTemas: {
-      id: "",
-      tema: "",
+      librosTema: {
+        id: "",
+        tema: "",
       },
       dialogLTCRUD: false,
       dlgDeleteConfirm: false,
@@ -242,6 +243,7 @@ export default {
           },
           configuracion
         );
+        console.log(response.data[0])
         me.librosTemas.push(response.data[0]);
       } catch (error) {
         console.log(error);

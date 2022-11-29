@@ -22,7 +22,7 @@
           </v-col>
           <v-col cols="8">
             <v-text-field id="enfermeriaMotivo" v-model.trim="enfermeriaMotivo.motivo"
-              :rules="[rules.required, rules.counter]" label="Convivencia Concepto" outlined autocomplete="off"
+              :rules="[rules.required, rules.counter]" label="Enfermeria Motivo" outlined autocomplete="off"
               clearable clear-icon="mdi-close-circle-outline">
             </v-text-field>
           </v-col>
@@ -62,7 +62,7 @@ export default {
         required: (value) => !!value || "Campo Requerido.",
         counter: (value) => value.length <= 20 || "Maximo 20 caracteres",
       },
-      enfermeriaMotivo: [],
+      msg: [],
       motivoID: "",
       motivo:""
     };
@@ -79,7 +79,7 @@ export default {
     'random_EM': function () {
       if (this.random_EM) {
         // console.log(this.this.random_EM);
-         this.motivoID = this.enfermeriaMotivo.motivoID;
+         //this.motivoID = this.enfermeriaMotivo.motivoID;
          console.log(this.random_EM)
          console.log(this.accion)
       }
@@ -92,25 +92,6 @@ export default {
     Cerrar() {
       this.$emit('closeEMCRUD')
     },
-
-    // async ListaEnfermeriaMotivos() {
-    //   let header = { Authorization: "Bearer " + this.$store.state.token };
-    //   let configuracion = { headers: header };
-    //   let me = this;
-    //   me.loadingData = true;
-    //   try {
-    //     const data = await axios.get(
-    //       `api/Enfermeria/${me.institucion}/ListaEnfermeriaMotivos`,
-    //       configuracion,
-    //       { timeout: 30000 }
-    //     );
-    //     console.log(data.data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   } finally {
-    //     me.loadingData = false;
-    //   }
-    // },
   },
 };
 </script>
